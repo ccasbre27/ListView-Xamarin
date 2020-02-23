@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ListViewRUI" xmlns:local1="clr-namespace:ListViewRUI.Behaviors"
+             mc:Ignorable="d" x:Class="ListViewRUI.MainPage">
+    <ContentPage.BindingContext>
+        <local:BookViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+    <ResourceDictionary>
+        <local:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+    </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ListView x:Name="Articles">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+                 <ViewCell>
+                    <ViewCell.View>
+                       <Grid>
+                          <StackLayout Orientation="Vertical">
+                               <StackLayout Orientation="Horizontal" Padding="20,10">
+                                       <Label FontAttributes="Bold" Text="{Binding Title}" HorizontalOptions="FillAndExpand"/> 
+                               </StackLayout>
+                           <StackLayout HeightRequest="3" BackgroundColor="DarkSlateGray"/>
+                          </StackLayout>
+                      </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+             </DataTemplate>
+			</ListView.ItemTemplate>
+            <ListView.Behaviors>
+                <local1:EventToCommandBehavior EventName="ItemSelected" Command="{Binding TapCommand}"  Converter="{StaticResource SelectedItemConverter}" />
+            </ListView.Behaviors>
+		</ListView>
+	</ContentPage.Content>
+</ContentPage>
